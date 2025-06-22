@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chole kheli</title>
+    <title>Cholo kheli</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,13 +11,13 @@
 
     <button class="move-button" onclick="
         gameplay('rock');
-        "><img src="images/rock.png" alt="" class="move-icon"></button>
+        "><img src="images/rock.png" alt="Rock" class="move-icon"></button>
     <button class="move-button" onclick="
         gameplay('paper');
-        "><img src="images/paper.png" alt="" class="move-icon"></button>
+        "><img src="images/paper.png" alt="Paper" class="move-icon"></button>
     <button class="move-button" onclick="
         gameplay('scissors');
-    "><img src="images/scissors.png" alt="" class="move-icon"></button>
+    "><img src="images/scissors.png" alt="Scissors" class="move-icon"></button>
 
     <p class="js-result result"></p>
     <p class="js-moves move"></p>
@@ -33,6 +33,12 @@
         update_score();
 
     ">Reset Score</button>
+
+    <button class="auto-play-button" onclick="
+        const innertext = document.querySelector('.auto-play-button');
+        innertext.innerHTML = (innertext.innerHTML==='Auto Play') ? 'Stop Play': 'Auto Play';
+        autoplay();
+    ">Auto Play</button>
 
 
     <script src="script.js"></script>
