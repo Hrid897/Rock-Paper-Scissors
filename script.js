@@ -1,16 +1,34 @@
-let score = {
-    win: 0, lose: 0, tie: 0
+let score;
+if(JSON.parse(localStorage.getItem('score')) !==null){
+    score = JSON.parse(localStorage.getItem('score'));
 }
+else{
+    score = {
+        win: 0, lose: 0, tie: 0
+    }
+}
+
 let result = '';
 
+
+function update_score(){
+    document.querySelector('.js-score').innerHTML = `Wins: ${score.win}, Losses: ${score.lose}, Ties: ${score.tie}`;
+}
 update_score();
 
-function gameplay(user_move){
+
+
+function move_generate(){
+    let mover_name='';
     const random_num = Math.random();
-    let computer_move = '';
-    if(0<=random_num && random_num<1/3) computer_move = 'rock';
-    else if(1/3<=random_num && random_num<2/3) computer_move = 'paper';
-    else computer_move = 'scissors';
+    if(0<=random_num && random_num<1/3) mover_name = 'rock';
+    else if(1/3<=random_num && random_num<2/3) mover_name = 'paper';
+    else mover_name = 'scissors';
+    return mover_name;
+}
+
+function gameplay(user_move){
+    let computer_move = move_generate();
 
     if(user_move==='rock'){
         if(computer_move==='rock') result = 'Tie';
@@ -29,10 +47,6 @@ function gameplay(user_move){
     }
 
 
-    if(JSON.parse(localStorage.getItem('score')) !==null){
-        score = JSON.parse(localStorage.getItem('score'));
-    }
-
     if(result==='Win') score.win++;
     else if(result==='Lose') score.lose++;
     else if(result==='Tie') score.tie++;
@@ -48,8 +62,20 @@ function gameplay(user_move){
     localStorage.setItem('score', JSON.stringify(score));
 }
 
+let isAutoPlaying = false;
+let intervalId;
 
-function update_score(){
-    document.querySelector('.js-score').innerHTML = `Wins: ${score.win}, Losses: ${score.lose}, Ties: ${score.tie}`;
+function autoplay(){
+    if(!isAutoPlaying){
+        intervalId = setInterval(function(){
+            gameplay(move_generate());
+        }, 1000); 
+
+        isAutoPlaying=true;
+    }
+    else{
+        clearInterval(intervalId);
+        isAutoPlaying=false;
+    }
 }
 
